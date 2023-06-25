@@ -12,7 +12,10 @@ class BiodataWidget extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              return const BioDataScreen();
+              return const BioDataScreen(
+                title: 'Biodata',
+                buttonlabel: 'Save',
+              );
             },
           ));
         },
@@ -20,7 +23,7 @@ class BiodataWidget extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.yellow[500],
               borderRadius: BorderRadius.circular(15)),
-          child:const Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

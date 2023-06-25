@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-        body: Column(
+        body: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -31,7 +31,10 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) {
-                          return const BioDataScreen();
+                          return const BioDataScreen(
+                            title: 'Create biodata',
+                            buttonlabel: 'Create',
+                          );
                         },
                       ));
                     },
@@ -53,8 +56,8 @@ class HomeScreen extends StatelessWidget {
               height: 1,
             ),
             GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
               itemCount: 3,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
