@@ -1,15 +1,21 @@
+import 'package:biodata_app/DataBase/db_functions.dart';
+import 'package:biodata_app/Models/biodata_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BioDataScreen extends StatelessWidget {
   final String title;
   final String buttonlabel;
-  const BioDataScreen({
+  BioDataScreen({
     super.key,
     required this.title,
     required this.buttonlabel,
   });
+  final namecntrl = TextEditingController();
 
+  final agecntrl = TextEditingController();
+  final placecntrl = TextEditingController();
+  final contentcntrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +30,18 @@ class BioDataScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: GestureDetector
-              (onTap: (){},
+              child: GestureDetector(
+                onTap: () {
+                  final data = BioDataModel(
+                      name: namecntrl.text,
+                      age: agecntrl.text,
+                      place: placecntrl.text,
+                      content: contentcntrl.text);
+                  if (title == 'Create biodata') {
+                    DBFunctions().addBiodata(data);
+                  }
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   width: 50,
                   height: 50,
@@ -41,10 +57,11 @@ class BioDataScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
-                decoration: InputDecoration(
+                controller: namecntrl,
+                decoration: const InputDecoration(
                     labelText: 'Full Name',
                     hintText: 'Name',
                     border: OutlineInputBorder()),
@@ -54,6 +71,7 @@ class BioDataScreen extends StatelessWidget {
               padding:
                   const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 250),
               child: TextField(
+                controller: agecntrl,
                 keyboardType:
                     TextInputType.number, // Allow only numerical input
                 inputFormatters: [
@@ -74,19 +92,19 @@ class BioDataScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                maxLength: 2,
-                maxLines: 1,
+                controller: placecntrl,
                 decoration: InputDecoration(
                     labelText: 'Place',
                     hintText: 'Place',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     focusColor: Colors.yellow[100]),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextField(
-                decoration: InputDecoration(
+                controller: contentcntrl,
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Content',
                     hintText: 'Content',

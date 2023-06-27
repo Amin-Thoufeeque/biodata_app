@@ -1,3 +1,4 @@
+import 'package:biodata_app/DataBase/db_functions.dart';
 import 'package:biodata_app/Screens/biodata_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,54 +18,69 @@ class HomeScreen extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 50,
-                width: 350,
-                decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) {
-                          return const BioDataScreen(
-                            title: 'Create biodata',
-                            buttonlabel: 'Create',
-                          );
-                        },
-                      ));
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 35,
+        body: ValueListenableBuilder(
+            valueListenable: biodataNotifier,
+            builder: (BuildContext ctx, value, _) {
+              DBFunctions().getBiodata();
+              return ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 50,
+                      width: 350,
+                      decoration: BoxDecoration(
+                          color: Colors.yellow,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) {
+                                return BioDataScreen(
+                                  title: 'Create biodata',
+                                  buttonlabel: 'Create',
+                                );
+                              },
+                            ));
+                          },
+                          icon: const Icon(
+                            Icons.add,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                          label: const Text(
+                            'Add Biodata',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: 20),
+                          )),
                     ),
-                    label: const Text(
-                      'Add Biodata',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 20),
-                    )),
-              ),
-            ),
-            const SizedBox(
-              height: 1,
-            ),
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemCount: 3,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return const BiodataWidget();
-              },
-            ),
-          ],
-        ));
+                  ),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                    itemCount: value.length,
+                    shrinkWrap: true,
+                    
+                    itemBuilder: (BuildContext context, int index) {
+                      final data = value[index];
+                      final dataid = data.id;
+                      final dataname = data.name;
+                      final dataage = data.age;
+                      return BiodataWidget(
+                        id: dataid!,
+                        name: dataname,
+                        age: dataage,
+                      );
+                    },
+                  ),
+                ],
+              );
+            }));
   }
 }

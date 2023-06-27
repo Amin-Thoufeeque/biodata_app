@@ -1,8 +1,14 @@
+import 'package:biodata_app/Models/biodata_model.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Screens/home_screen.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  if (!Hive.isAdapterRegistered(BioDataModelAdapter().typeId)) {
+    Hive.registerAdapter(BioDataModelAdapter());
+  }
   runApp(const MyApp());
 }
 
