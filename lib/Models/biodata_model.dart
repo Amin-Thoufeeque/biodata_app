@@ -17,6 +17,7 @@ class BioDataModel {
   BioDataModel(
       {required this.name,
       required this.age,
+      this.id,
       required this.place,
       required this.content});
 }

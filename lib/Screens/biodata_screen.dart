@@ -3,11 +3,23 @@ import 'package:biodata_app/Models/biodata_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class BioDataScreen extends StatelessWidget {
   final String title;
   final String buttonlabel;
+  final String? idage;
+  final String? idname;
+  final String? idcontent;
+  final String? idplace;
+  int? bioID;
+ 
   BioDataScreen({
     super.key,
+  this.bioID,
+    this.idage,
+    this.idname,
+    this.idcontent,
+    this.idplace,
     required this.title,
     required this.buttonlabel,
   });
@@ -18,6 +30,10 @@ class BioDataScreen extends StatelessWidget {
   final contentcntrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    namecntrl.text = idname ?? namecntrl.text;
+    agecntrl.text = idage ?? agecntrl.text;
+    placecntrl.text = idplace ?? placecntrl.text;
+    contentcntrl.text = idcontent ?? contentcntrl.text;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.yellow,
@@ -37,8 +53,18 @@ class BioDataScreen extends StatelessWidget {
                       age: agecntrl.text,
                       place: placecntrl.text,
                       content: contentcntrl.text);
+
                   if (title == 'Create biodata') {
-                    DBFunctions().addBiodata(data);
+                    DBFunctions.instance.addBiodata(data);
+                  } else if (title == 'Biodata') {
+                     final editedBiodata = BioDataModel(
+                        name: namecntrl.text,
+                        age: agecntrl.text,
+                        place: placecntrl.text,
+                        content: contentcntrl.text,
+                        id: bioID
+                      );
+                       DBFunctions.instance.updateBiodata(editedBiodata);
                   }
                   Navigator.of(context).pop();
                 },

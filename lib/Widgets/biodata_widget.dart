@@ -15,11 +15,25 @@ class BiodataWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
+          final data = DBFunctions.instance.getBiodatabyID(id);
+          if (data == null) {
+            Navigator.of(context).pop();
+          }
+          final nametxt = data!.name;
+          final agetxt = data.age;
+          final placetxt = data.place;
+          final contenttxt = data.content;
+
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
               return BioDataScreen(
                 title: 'Biodata',
                 buttonlabel: 'Save',
+                idname: nametxt,
+                idage: agetxt,
+                idplace: placetxt,
+                idcontent: contenttxt,
+                bioID: id,
               );
             },
           ));
@@ -53,7 +67,8 @@ class BiodataWidget extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      DBFunctions().deleteBiodata(id);
+                      print(id);
+                      DBFunctions.instance.deleteBiodata(id);
                     },
                     icon: const Icon(
                       Icons.delete,

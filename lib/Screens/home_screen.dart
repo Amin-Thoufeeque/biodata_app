@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
         body: ValueListenableBuilder(
             valueListenable: biodataNotifier,
             builder: (BuildContext ctx, value, _) {
-              DBFunctions().getBiodata();
+              DBFunctions.instance.getBiodata();
               return ListView(
                 children: [
                   Padding(
@@ -66,14 +66,17 @@ class HomeScreen extends StatelessWidget {
                             crossAxisCount: 2),
                     itemCount: value.length,
                     shrinkWrap: true,
-                    
                     itemBuilder: (BuildContext context, int index) {
                       final data = value[index];
                       final dataid = data.id;
                       final dataname = data.name;
                       final dataage = data.age;
+                      if (dataid == null) {
+                        print('null id');
+                        return null;
+                      }
                       return BiodataWidget(
-                        id: dataid!,
+                        id: dataid,
                         name: dataname,
                         age: dataage,
                       );
