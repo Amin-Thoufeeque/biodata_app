@@ -50,6 +50,7 @@ class BiodataWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Text(
                   'Name: \n$name',
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold),
                 ),

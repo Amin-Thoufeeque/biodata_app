@@ -1,17 +1,12 @@
-import 'package:hive/hive.dart';
-part 'biodata_model.g.dart';
-
-@HiveType(typeId: 0)
 class BioDataModel {
-  @HiveField(0)
   int? id;
-  @HiveField(1)
+
   final String name;
-  @HiveField(2)
+
   final String age;
-  @HiveField(3)
+
   final String place;
-  @HiveField(4)
+
   final String content;
 
   BioDataModel(
@@ -20,4 +15,14 @@ class BioDataModel {
       this.id,
       required this.place,
       required this.content});
+
+  static BioDataModel fromMap(Map<String, Object?> map) {
+    final id = map['id'] as int;
+    final name = map['name'] as String;
+    final age = map['age'] as String;
+    final place = map['place'] as String;
+    final content = map['content'] as String;
+    return BioDataModel(
+        name: name, age: age, place: place, content: content, id: id);
+  }
 }

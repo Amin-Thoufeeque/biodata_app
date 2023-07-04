@@ -12,10 +12,10 @@ class BioDataScreen extends StatelessWidget {
   final String? idcontent;
   final String? idplace;
   int? bioID;
- 
+
   BioDataScreen({
     super.key,
-  this.bioID,
+    this.bioID,
     this.idage,
     this.idname,
     this.idcontent,
@@ -33,7 +33,7 @@ class BioDataScreen extends StatelessWidget {
     namecntrl.text = idname ?? namecntrl.text;
     agecntrl.text = idage ?? agecntrl.text;
     placecntrl.text = idplace ?? placecntrl.text;
-    contentcntrl.text = idcontent ?? contentcntrl.text;
+    contentcntrl.text = idcontent == null ? contentcntrl.text : idcontent!;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.yellow,
@@ -57,14 +57,13 @@ class BioDataScreen extends StatelessWidget {
                   if (title == 'Create biodata') {
                     DBFunctions.instance.addBiodata(data);
                   } else if (title == 'Biodata') {
-                     final editedBiodata = BioDataModel(
+                    final editedBiodata = BioDataModel(
                         name: namecntrl.text,
                         age: agecntrl.text,
                         place: placecntrl.text,
                         content: contentcntrl.text,
-                        id: bioID
-                      );
-                       DBFunctions.instance.updateBiodata(editedBiodata);
+                        id: bioID);
+                    DBFunctions.instance.updateBiodata(editedBiodata);
                   }
                   Navigator.of(context).pop();
                 },
